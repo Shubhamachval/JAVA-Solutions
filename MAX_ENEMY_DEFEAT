@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class Solution{
+    
+    static int maxDefeat(int my_exp,int pow[],HashMap<Integer,Integer> exp){
+        
+    LinkedHashMap<Integer, Integer> s_exp=new LinkedHashMap<>(); 
+    exp.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(x-> s_exp.put(x.getKey(),x.getValue()));
+    
+    Iterator<Map.Entry<Integer, Integer>> itr = s_exp.entrySet().iterator();
+    while(itr.hasNext()){
+        Map.Entry<Integer, Integer> e=itr.next();
+      if(my_exp>=pow[e.getKey()]){
+          my_exp+=e.getValue();
+          s_exp.remove(e.getKey());
+          itr = s_exp.entrySet().iterator();
+      }   
+    }
+// System.out.println(pow.length+" "+s_exp.size());
+       return pow.length-s_exp.size(); 
+    }
+    
+    public static void main(String []ags){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int my_exp=sc.nextInt();
+        int power[]=new int[n];
+        HashMap<Integer,Integer> exp=new HashMap<>();
+        for(int i=0;i<n;i++){
+             
+         power[i]=sc.nextInt();   
+        }
+        
+        for(int i=0;i<n;i++){
+         exp.put(i,sc.nextInt());   
+        }
+        
+        
+    System.out.println(maxDefeat(my_exp,power,exp)) ;   
+    }
+    
+    
+    
+}
